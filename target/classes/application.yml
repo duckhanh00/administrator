@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/server_db
+    username: postgres
+    password: user
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+    database: postgresql
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+      FAIL_ON_EMPTY_BEANS: false
+    deserialization:
+      unwrap-root-value: false
+
+  profiles:
+    active:
+      - dev
+    autoconfigure:
+      exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+  cache:
+    type: redis
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: password
+      database: 0
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+
+clear:
+  all:
+    cache:
+      fixed:
+        rate:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: "*"
+
+  endpoint:
+    shutdown:
+      enabled: true
